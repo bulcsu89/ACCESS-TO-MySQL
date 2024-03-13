@@ -123,7 +123,6 @@ int main()
             string null="0";
             int c=0;
             int primary=0;
-            int pointer=0;
 
             string header;
             string word;
@@ -137,7 +136,6 @@ int main()
             while (getline(headerstream, word, character)) {
                 column[c] = word;
                 cout << "[" << c+1 << "] " << column[c] << endl;
-                pointer += word.length();
                 c++;
             }
 
@@ -271,7 +269,6 @@ int main()
                             variabletype[i]="year";
                         } else if ((min==0 && max==1) || (min==-1 && max==0)) {
                             variabletype[i]="boolean";
-                            null = "0";
                         } else {
                             variabletype[i]="int";
                             value[i]="(" + to_string(dmax+1) + ")";
@@ -313,6 +310,9 @@ int main()
 
                     bool p=false;
                     int pos=0;
+                    int pos2=0;
+                    string vartest;
+                    int vartestnum;
                     do {
                         if (p == true) {
                             cout << "WARNING: Non-SQL variable type" << endl;
@@ -321,8 +321,25 @@ int main()
                         cin >> variable;
                         p = true;
                         pos = variable.find("(");
+                        pos2 = variable.find(")");
+                        if (pos2 > 3) {
+                            try {
+                            vartest = variable.substr(pos+1, pos2-1);
 
-                    } while (pos <= 1 && variable != "date" && variable != "text" && variable != "binary" && variable != "boolean" && variable != "year" && variable != "real" && variable != "double" && variable != "time" && variable != "datetime");
+                                try {
+                                    vartestnum = stoi(vartest);
+
+                                } catch (...) {
+                                    pos = 0;
+                                }
+                            } catch (...) {
+                                pos = 0;
+                            }
+                        } else {
+                            pos = 0;
+                        }
+
+                    } while ( pos <= 1 && variable != "date" && variable != "text" && variable != "binary" && variable != "boolean" && variable != "year" && variable != "real" && variable != "double" && variable != "time" && variable != "datetime");
 
                     if (variable != "date" && variable != "text" && variable != "boolean" && variable != "binary" && variable != "year" && variable != "real" && variable != "double" && variable != "time" && variable != "datetime") {
                         variabletype[i] = variable.substr(0, pos);
@@ -330,10 +347,9 @@ int main()
                     } else {
                         variabletype[i] = variable;
                     }
-                    if (variable != "boolean") {
-                        cout << "ENABLE NULL VALUES: ";
-                        cin >> null;
-                    }
+                    cout << "ENABLE NULL VALUES: ";
+                    cin >> null;
+
                     if (null == "1" || null == "yes" || null == "YES" || null == "y" || null == "Y") {
                         nullvalue[i] = 1;
                     }
@@ -445,4 +461,4 @@ int main()
 
 }
 
-//MADY BY DENCS BULCSÚ
+//MADE BY BULCSÚ DENCS
