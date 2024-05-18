@@ -200,11 +200,11 @@ int main()
                                         ////ADAT HOSSZ
                                         if (word.length() > dmax) dmax = word.length();
 
-                                        //DATUM?
+                                        //DATUM/IDO?
                                         if (((word[4]!='-' || word[7]!='-' || word[13]!=':' || word[16]!=':' ) && (word[4]!='.' || word[7]!='.' || word[13]!=':' || word[16]!=':')) || word.length() !=19 ) {
                                             is_datetime = false;
                                             if (((word[4]!='-' || word[7]!='-') && (word[4]!='.' || word[7]!='.')) || word.length() !=10) is_date = false;
-                                            if (word[2]!=':' || word[5]!=':' || word.length() != 8) is_time = false;
+                                            if ((word[2]!=':' || word[5]!=':' || word.length() != 8) && (word[1]!=':' || word[4]!=':' || word.length() != 7)) is_time = false;
                                         }
 
                                         //SZAM?
@@ -460,4 +460,3 @@ int main()
 
 }
 
-//MADE BY BULCSÚ DENCS
